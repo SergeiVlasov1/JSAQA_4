@@ -1,14 +1,18 @@
 let page;
 
+beforeEach(async () => {
+  page = await browser.newPage();
+});
+
+afterEach(() => {
+  page.close();
+});
+
 describe("Github page tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/team");
-  }, 5000);
-
-  afterEach(() => {
-    page.close();
   });
+
 
   test("The h1 header content'", async () => {
     const firstLink = await page.$("header div div a");
@@ -35,14 +39,7 @@ describe("Github page tests", () => {
 
 
 describe("Titles of other pages", () => {
-  beforeEach(async () => {
-        page = await browser.newPage();
-      });
-    
-      afterEach(async () => {
-        await page.close();
-      });
-
+  
   test("Should find the title on /features", async () => {
     await page.goto("https://github.com/features");
     const title = "div.application-main main div.p-responsive.container-xl.text-center.mt-12.mb-6 h1";
